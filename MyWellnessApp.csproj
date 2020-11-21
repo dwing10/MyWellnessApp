@@ -6,4 +6,13 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="DataAccessLayer\SQL\" />
+    <Folder Include="Images\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Syncfusion.SfRadialMenu.WPF" Version="18.3.0.50" />
+  </ItemGroup>
+
 </Project>

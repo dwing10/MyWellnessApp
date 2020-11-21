@@ -1,0 +1,109 @@
+﻿<UserControl x:Class="MyWellnessApp.PresentationLayer.Views.UserProfile"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MyWellnessApp.PresentationLayer.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="300" Background="Black">
+    <UserControl.Resources>
+        <Style x:Key="LabelStyle" TargetType="Label">
+            <Setter Property="Foreground" Value='White'/>
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="Width" Value="60"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Background" Value="White" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="BorderBrush" Value="Cyan" />
+            <Setter Property="BorderThickness" Value="2" />
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <StackPanel
+            Grid.Row="0">
+            <Label
+                HorizontalAlignment="Center"
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                FontSize="24"
+                Height="60"
+                Width="300"
+                Foreground="White"
+                Content="{Binding ProfileTitle}"/>
+        </StackPanel>
+        <Grid
+                Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <!-- Name -->
+            <Label
+                Grid.Column="0"
+                Grid.Row="0"
+                Content="Name:"
+                Style="{StaticResource LabelStyle}"/>
+            <Label
+                Grid.Column="1"
+                Grid.Row="0"
+                Content="{Binding CurrentUser.Name}"
+                Style="{StaticResource LabelStyle}"/>
+
+            <!-- Username -->
+            <Label
+                Grid.Column="0"
+                Grid.Row="1"
+                Content="Username:"
+                Style="{StaticResource LabelStyle}"/>
+            <Label
+                Grid.Column="1"
+                Grid.Row="1"
+                Content="{Binding CurrentUser.UserName}"
+                Style="{StaticResource LabelStyle}"/>
+
+            <!-- Password -->
+            <Label
+                Grid.Column="0"
+                Grid.Row="2"
+                Content="Password:"
+                Style="{StaticResource LabelStyle}"/>
+            <Label
+                Grid.Column="1"
+                Grid.Row="2"
+                Content="{Binding CurrentUser.Password}"
+                Style="{StaticResource LabelStyle}"/>
+
+            <!-- buttons -->
+            <Button 
+                Grid.Column="0"
+                Grid.Row="3"
+                Content="Close"
+                Style="{StaticResource ButtonStyle}"
+                Command="{Binding ReturnCommand}"
+                CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}"
+                />
+            <Button 
+                Grid.Column="1"
+                Grid.Row="3"
+                Content="Edit"
+                Style="{StaticResource ButtonStyle}"/>
+        </Grid>
+    </Grid>
+</UserControl>

@@ -1,0 +1,61 @@
+﻿<Window x:Class="MyWellnessApp.PresentationLayer.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MyWellnessApp.PresentationLayer"
+        mc:Ignorable="d"
+        Title="LoginWindow" Height="250" Width="500">
+    <Grid>
+        <StackPanel>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <DockPanel
+                    Grid.Row="0">
+                    <Menu DockPanel.Dock="Top" Background="Black" Foreground="White">
+                        <MenuItem Header= "Register" Command="{Binding ViewSelectionCommand}" CommandParameter="Register"  Background="Black">
+                        </MenuItem>
+                    <MenuItem Header="Exit" Command="{Binding ViewSelectionCommand}" CommandParameter="Exit"  Background="Black"/>
+                </Menu>
+                </DockPanel>
+
+                <Label 
+                    Grid.Row="1"
+                    Content="Welcome To My Fitness App"
+                    HorizontalAlignment="Center"
+                    FontSize="32"/>
+                <StackPanel
+                    Grid.Row="2"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center">
+                    <Label 
+                        Content="Username"/>
+                    <TextBox 
+                        Width="100"
+                        Text="{Binding InputUsername}"/>
+                </StackPanel>
+                <StackPanel
+                    Grid.Row="3"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center">
+                    <Label 
+                        Content="Password"/>
+                    <TextBox 
+                        Width="100"
+                        Text="{Binding InputPassword}"/>
+                </StackPanel>
+                <Button
+                    Grid.Row="4"
+                    Content="Login"
+                    Width="50"
+                    Command="{Binding LoginCommand}"/>
+            </Grid>
+        </StackPanel>
+    </Grid>
+</Window>
