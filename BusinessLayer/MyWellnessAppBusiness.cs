@@ -1,7 +1,9 @@
 ﻿using MyWellnessApp.DataAccessLayer;
+using MyWellnessApp.DataAccessLayer.SQL;
 using MyWellnessApp.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace MyWellnessApp.BusinessLayer
@@ -17,8 +19,8 @@ namespace MyWellnessApp.BusinessLayer
         #region Constructors
 
         public MyWellnessAppBusiness() 
-        { 
-            
+        {
+            SqlUtilities.WriteSeedData();
         }
 
         #endregion
@@ -28,7 +30,7 @@ namespace MyWellnessApp.BusinessLayer
         /// <summary>
         /// gets all of the users
         /// </summary>
-        private List<User> GetAllUsers() 
+        public List<User> GetAllUsers() 
         {
             List<User> user = null;
             FileIOStatus = FileIoMessage.None;
@@ -61,7 +63,7 @@ namespace MyWellnessApp.BusinessLayer
         /// <summary>
         /// gets user by id
         /// </summary>
-        private User GetUser(int id) 
+        public User GetUser(int id) 
         {
             User user = null;
             FileIOStatus = FileIoMessage.None;
@@ -127,6 +129,22 @@ namespace MyWellnessApp.BusinessLayer
         }
 
         /// <summary>
+        /// adds a workout to the user
+        /// </summary>
+        public void AddExerciseToUser(User user, PhysicalActivity physicalActivity) 
+        {
+            user.PhysicalActivities.Add(physicalActivity);
+        }
+
+        /// <summary>
+        /// adds a task to the user
+        /// </summary>
+        public void AddTaskToUser(User user, Task task)
+        {
+            user.Task.Add(task);
+        }
+
+        /// <summary>
         /// deletes a user by ID
         /// </summary>
         public void DeleteUser(int id) 
@@ -152,6 +170,35 @@ namespace MyWellnessApp.BusinessLayer
                 FileIOStatus = FileIoMessage.FileAccessError;
                 throw;
             }
+        }
+
+        /// <summary>
+        /// removes excersise from user
+        /// </summary>
+        public void DeleteExercise(User user, PhysicalActivity physicalActivity) 
+        {
+            user.PhysicalActivities.Remove(physicalActivity);
+        }
+
+        /// <summary>
+        /// edits user excersise
+        /// </summary>
+        public void EditExercise(User user, PhysicalActivity physicalActivity)
+        {
+            user.PhysicalActivities.Add(physicalActivity);
+        }
+
+        /// <summary>
+        /// removes task from user
+        /// </summary>
+        public void DeleteTask(User user, Task task) 
+        {
+            user.Task.Remove(task);
+        }
+
+        public void EditTask(User user, Task task) 
+        {
+            user.Task.Add(task);
         }
 
         /// <summary>

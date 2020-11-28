@@ -46,7 +46,8 @@ namespace MyWellnessApp.PresentationLayer.ViewModels
 
         public LoginWindowViewModel(MyWellnessAppBusiness myWellnessAppBusiness)
         {
-
+            InputPassword = "password";
+            InputUsername = "dwing";
         }
 
         #endregion
@@ -71,7 +72,8 @@ namespace MyWellnessApp.PresentationLayer.ViewModels
         private void Login(object obj)
         {
             MyWellnessAppBusiness myWellnessAppBusiness = new MyWellnessAppBusiness();
-            List<User> user = myWellnessAppBusiness.RetreiveAllUserFromDataPath();
+            //List<User> user = myWellnessAppBusiness.RetreiveAllUserFromDataPath();
+            List<User> user = myWellnessAppBusiness.GetAllUsers();
 
             if (!String.IsNullOrEmpty(InputUsername) && !String.IsNullOrEmpty(InputPassword))
             {
@@ -81,7 +83,7 @@ namespace MyWellnessApp.PresentationLayer.ViewModels
                     {
                         if (u.UserName == InputUsername && u.Password == InputPassword)
                         {
-                            DashboardWindowViewModel dashboardWindowViewModel = new DashboardWindowViewModel(u);
+                            DashboardWindowViewModel dashboardWindowViewModel = new DashboardWindowViewModel(myWellnessAppBusiness.GetUser(u.ID));
                             DashboardWindow dashboardWindow = new DashboardWindow();
 
                             dashboardWindow.DataContext = dashboardWindowViewModel;

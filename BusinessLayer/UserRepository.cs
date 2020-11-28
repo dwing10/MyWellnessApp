@@ -15,10 +15,11 @@ namespace MyWellnessApp.BusinessLayer
         public UserRepository()
         {
             DataConfig dataConfig = new DataConfig();
-            //_dataService = dataConfig.SetDataServices();
+            _dataService = dataConfig.SetDataService();
             try
             {
                 _users = _dataService.GetAll() as List<User>;
+                //_users = SeedData.GetAllUsers();
             }
             catch (Exception e)
             {
@@ -40,7 +41,8 @@ namespace MyWellnessApp.BusinessLayer
         /// </summary>
         public User GetByID(int id)
         {
-            return _users.FirstOrDefault(u => u.ID == id);
+           return _dataService.GetByID(id);
+            //return _users.FirstOrDefault(u => u.ID == id);
         }
 
         /// <summary>
@@ -82,7 +84,7 @@ namespace MyWellnessApp.BusinessLayer
                 //_dataService.Update(pokemon);
 
                 _users.Remove(_users.FirstOrDefault(u => u.ID == user.ID));
-                //_pokemon.Add(pokemon);
+                _users.Add(user);
                 //_dataService.WriteAll(_pokemon);
             }
             catch (Exception e)

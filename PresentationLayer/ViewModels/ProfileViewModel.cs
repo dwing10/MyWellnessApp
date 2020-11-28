@@ -53,16 +53,19 @@ namespace MyWellnessApp.PresentationLayer.ViewModels
 
         #region Commands
 
-        public ICommand ReturnCommand 
+        public ICommand ExitCommand
         {
-            get { return new RelayCommand(new Action<object>(Return)); }
+            get { return new RelayCommand(new Action<object>(Close)); }
         }
 
         #endregion
 
         #region Methods
 
-        private void Return(object obj) 
+        /// <summary>
+        /// resets the UserControl's content
+        /// </summary>
+        private void Close(object obj)
         {
             if (obj is System.Windows.Controls.UserControl)
             {

@@ -1,5 +1,6 @@
 ﻿using MyWellnessApp.Models;
 using MyWellnessApp.PresentationLayer.Views;
+using MyWellnessApp.PresentationLayer.Views.UserControls;
 using MyWellnessApp.Utilities;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,6 @@ namespace MyWellnessApp.PresentationLayer.ViewModels
         private UserControl _leftUserControl;
         private UserControl _rightUserControl;
 
-        private List<string> _currentUserTasks;
         private string _welcomeMessage;
 
         #endregion
@@ -46,10 +46,10 @@ namespace MyWellnessApp.PresentationLayer.ViewModels
             }
         }
 
-        public UserControl LeftUserControl 
-        { 
+        public UserControl LeftUserControl
+        {
             get { return _leftUserControl; }
-            set 
+            set
             {
                 _leftUserControl = value;
                 OnPropertyChanged(nameof(LeftUserControl));
@@ -63,16 +63,6 @@ namespace MyWellnessApp.PresentationLayer.ViewModels
             {
                 _rightUserControl = value;
                 OnPropertyChanged(nameof(RightUserControl));
-            }
-        }
-
-        public List<string> CurrentUserTasks
-        {
-            get { return _currentUserTasks; }
-            set
-            {
-                _currentUserTasks = value;
-                OnPropertyChanged(nameof(CurrentUserTasks));
             }
         }
 
@@ -93,7 +83,6 @@ namespace MyWellnessApp.PresentationLayer.ViewModels
         public DashboardWindowViewModel(User user)
         {
             _currentUser = user;
-            _currentUserTasks = user.Task;
             BuildWelcomeMessage();
         }
 
@@ -101,45 +90,267 @@ namespace MyWellnessApp.PresentationLayer.ViewModels
 
         #region Commands
 
+        public ICommand TaskViewCommand
+        {
+            get { return new RelayCommand(new Action<object>(ViewTasks)); }
+        }
+
+        public ICommand AddTaskCommand
+        {
+            get { return new RelayCommand(new Action<object>(AddTasks)); }
+        }
+
+        public ICommand EditTaskCommand
+        {
+            get { return new RelayCommand(new Action<object>(EditTasks)); }
+        }
+
         public ICommand WorkoutViewCommand
         {
             get { return new RelayCommand(new Action<object>(ViewWorkouts)); }
         }
 
-        public ICommand ProfileViewCommand 
-        { 
+        public ICommand AddWorkoutCommand
+        {
+            get { return new RelayCommand(new Action<object>(AddWorkout)); }
+        }
+
+        public ICommand EditWorkoutCommand
+        {
+            get { return new RelayCommand(new Action<object>(EditWorkout)); }
+        }
+
+        public ICommand ProfileViewCommand
+        {
             get { return new RelayCommand(new Action<object>(ViewProfilePage)); }
+        }
+
+        public ICommand EditProfileCommand
+        {
+            get { return new RelayCommand(new Action<object>(EditUserProfile)); }
         }
 
         #endregion
 
         #region Methods
 
-        private void ViewWorkouts(object obj) 
+        /// <summary>
+        /// view current user's tasks
+        /// </summary>
+        private void ViewTasks(object obj) 
         {
-            WorkoutViewModel workoutViewModel = new WorkoutViewModel(CurrentUser);
-            UserWorkouts userWorkouts = new UserWorkouts();
-            userWorkouts.DataContext = workoutViewModel;
+            RightUserControl = null;
 
-            RightUserControl = userWorkouts;
+            if (RightUserControl == null)
+            {
+                UserTaskViewModel userTaskViewModel = new UserTaskViewModel(CurrentUser);
+                UserTask userTask = new UserTask();
+                userTask.DataContext = userTaskViewModel;
+
+                RightUserControl = userTask;
+                WelcomeMessage = null;
+            }
+            else
+            {
+                RightUserControl = null;
+            }
+        }
+
+        /// <summary>
+        /// shows the add task user control
+        /// </summary>
+        private void AddTasks(object obj) 
+        {
+            LeftUserControl = null;
+
+            if (LeftUserControl == null)
+            {
+                AddTaskViewModel addTaskViewModel = new AddTaskViewModel(CurrentUser);
+                AddTask addTasks = new AddTask
+                {
+                    DataContext = addTaskViewModel
+                };
+
+                LeftUserControl = addTasks;
+                WelcomeMessage = null;
+            }
+            else
+            {
+                LeftUserControl = null;
+            }
+        }
+
+        /// <summary>
+        /// edit current user's tasks
+        /// </summary>
+        private void EditTasks(object obj)
+        {
+            RightUserControl = null;
+
+            if (RightUserControl == null)
+            {
+                EditTaskViewModel editTaskViewModel =  new EditTaskViewModel(CurrentUser);
+                EditTask editTask = new EditTask
+                {
+                    DataContext = editTaskViewModel
+                };
+
+                RightUserControl = editTask;
+                WelcomeMessage = null;
+            }
+            else
+            {
+                RightUserControl = null;
+            }
+        }
+
+        /// <summary>
+        /// view current user's workouts
+        /// </summary>
+        private void ViewWorkouts(object obj)
+        {
+            RightUserControl = null;
+
+            if (RightUserControl == null)
+            {
+                WorkoutViewModel workoutViewModel = new WorkoutViewModel(CurrentUser, this);
+                UserWorkouts userWorkouts = new UserWorkouts();
+                userWorkouts.DataContext = workoutViewModel;
+
+                RightUserControl = userWorkouts;
+                WelcomeMessage = null;
+            }
+            else
+            {
+                RightUserControl = null;
+            }
+        }
+
+        /// <summary>
+        /// shows the add workout user control
+        /// </summary>
+        private void AddWorkout(object obj)
+        {
+            LeftUserControl = null;
+
+            if (LeftUserControl == null)
+            {
+                AddWorkoutViewModel addWorkoutViewModel = new AddWorkoutViewModel(CurrentUser);
+                AddWorkout addWorkout = new AddWorkout();
+                addWorkout.DataContext = addWorkoutViewModel;
+
+                LeftUserControl = addWorkout;
+                WelcomeMessage = null;
+            }
+            else
+            {
+                LeftUserControl = null;
+            }
+        }
+
+        /// <summary>
+        /// edit current user's workout
+        /// </summary>
+        private void EditWorkout(object obj)
+        {
+            PhysicalActivity activity = new PhysicalActivity();
+            activity = null;
+            SetProgressBar(activity);
+
+            RightUserControl = null;
+
+            if (RightUserControl == null)
+            {
+                EditWorkoutViewModel editWorkoutViewModel = new EditWorkoutViewModel(CurrentUser, this);
+                EditWorkout editWorkout = new EditWorkout
+                {
+                    DataContext = editWorkoutViewModel
+                };
+
+                RightUserControl = editWorkout;
+                WelcomeMessage = null;
+            }
+            else
+            {
+                RightUserControl = null;
+            }
         }
 
         /// <summary>
         /// sets content of user control to user's profile
         /// </summary>
-        private void ViewProfilePage(object obj) 
+        private void ViewProfilePage(object obj)
         {
-            ProfileViewModel profileViewModel = new ProfileViewModel(CurrentUser);
-            UserProfile userProfile = new UserProfile();
-            userProfile.DataContext = profileViewModel;
+            LeftUserControl = null;
 
-            LeftUserControl = userProfile;
+            if (LeftUserControl == null)
+            {
+                ProfileViewModel profileViewModel = new ProfileViewModel(CurrentUser);
+                UserProfile userProfile = new UserProfile();
+                userProfile.DataContext = profileViewModel;
+
+                LeftUserControl = userProfile;
+                WelcomeMessage = null;
+            }
+            else
+            {
+                LeftUserControl = null;
+            }
+        }
+
+        private void EditUserProfile(object obj) 
+        {
+            LeftUserControl = null;
+
+            if (LeftUserControl == null)
+            {
+                EditProfileViewModel editProfileViewModel = new EditProfileViewModel(CurrentUser);
+                EditProfile editProfile = new EditProfile
+                {
+                    DataContext = editProfileViewModel
+                };
+
+                LeftUserControl = editProfile;
+                WelcomeMessage = null;
+            }
+            else
+            {
+                LeftUserControl = null;
+            }
+        }
+
+        /// <summary>
+        /// sets the progress bar user control
+        /// </summary>
+        public void SetProgressBar(PhysicalActivity activity) 
+        {
+            LeftUserControl = null;
+
+            if (LeftUserControl == null && activity != null)
+            {
+                WorkoutProgressBarViewModel workoutProgressBar = new WorkoutProgressBarViewModel(CurrentUser, activity);
+                WorkoutProgressBar progressBar = new WorkoutProgressBar()
+                {
+                    DataContext = workoutProgressBar
+                };
+
+                LeftUserControl = progressBar;
+                WelcomeMessage = null;
+            }
+            else if (activity == null)
+            {
+                LeftUserControl = null;
+            }
+            else
+            {
+                LeftUserControl = null;
+            }
         }
 
         /// <summary>
         /// builds out the title on the main dashboard
         /// </summary>
-        private void BuildWelcomeMessage() 
+        private void BuildWelcomeMessage()
         {
             WelcomeMessage = $"Welcome {CurrentUser.Name}!";
         }

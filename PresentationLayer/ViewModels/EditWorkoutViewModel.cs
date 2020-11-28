@@ -8,12 +8,11 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
-using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace MyWellnessApp.PresentationLayer.ViewModels
 {
-    public class WorkoutViewModel : ObservableObject
+    public class EditWorkoutViewModel : ObservableObject
     {
         #region Fields
 
@@ -22,11 +21,12 @@ namespace MyWellnessApp.PresentationLayer.ViewModels
 
         private User _currentUser;
         private ObservableCollection<PhysicalActivity> _currentUserWorkouts;
-        private ObservableCollection<string> _categoryForFilter;
+        private ObservableCollection<string> _category;
         private PhysicalActivity _selectedWorkout;
 
+        private string _categoryToEdit;
         private string _workoutCategory;
-        private string _categoryFilter;
+        private string _message;
 
         #endregion
 
@@ -52,13 +52,13 @@ namespace MyWellnessApp.PresentationLayer.ViewModels
             }
         }
 
-        public ObservableCollection<string> CategoryForFilter
+        public ObservableCollection<string> Category
         {
-            get { return _categoryForFilter; }
+            get { return _category; }
             set
             {
-                _categoryForFilter = value;
-                OnPropertyChanged(nameof(CategoryForFilter));
+                _category = value;
+                OnPropertyChanged(nameof(Category));
             }
         }
 
@@ -74,6 +74,17 @@ namespace MyWellnessApp.PresentationLayer.ViewModels
             }
         }
 
+        public string CategoryToEdit
+        {
+            get { return _categoryToEdit; }
+            set
+            {
+                _categoryToEdit = value;
+                OnPropertyChanged(nameof(CategoryToEdit));
+            }
+        }
+
+
         public string WorkoutCategory
         {
             get { return _workoutCategory; }
@@ -84,13 +95,14 @@ namespace MyWellnessApp.PresentationLayer.ViewModels
             }
         }
 
-        public string CategoryFilter
+
+        public string Message
         {
-            get { return _categoryFilter; }
+            get { return _message; }
             set
             {
-                _categoryFilter = value;
-                OnPropertyChanged(nameof(CategoryFilter));
+                _message = value;
+                OnPropertyChanged(nameof(Message));
             }
         }
 
@@ -98,32 +110,27 @@ namespace MyWellnessApp.PresentationLayer.ViewModels
 
         #region Constructors
 
-        public WorkoutViewModel(User user, DashboardWindowViewModel dashboardWindowViewModel)
+        public EditWorkoutViewModel(User user, DashboardWindowViewModel dashboardWindowViewModel) 
         {
             _myWellnessAppBusiness = new MyWellnessAppBusiness();
-            _dashboardWindowViewModel = dashboardWindowViewModel;
             _currentUser = user;
-            _currentUserWorkouts = new ObservableCollection<PhysicalActivity>(CurrentUser.PhysicalActivities);
-            _categoryForFilter = new ObservableCollection<string>(Enum.GetNames(typeof(PhysicalActivity.ExerciseType)));
+            _dashboardWindowViewModel = dashboardWindowViewModel;
+            _currentUserWorkouts = _currentUserWorkouts = new ObservableCollection<PhysicalActivity>(CurrentUser.PhysicalActivities);
+            _category = new ObservableCollection<string>(Enum.GetNames(typeof(PhysicalActivity.ExerciseType)));
         }
 
         #endregion
 
         #region Commands
 
-        public ICommand RefreshCommand
+        public ICommand SaveCommand
         {
-            get { return new RelayCommand(new Action<object>(RefreshList)); }
+            get { return new RelayCommand(new Action<object>(EditUserWorkout)); }
         }
 
-        public ICommand FilterCommand
+        public ICommand ClearCommand
         {
-            get { return new RelayCommand(new Action<object>(OnFilterCategory)); }
-        }
-
-        public ICommand DeleteCommand
-        {
-            get { return new RelayCommand(new Action<object>(DeleteWorkout)); }
+            get { return new RelayCommand(new Action<object>(Clear)); }
         }
 
         public ICommand ExitCommand
@@ -135,56 +142,56 @@ namespace MyWellnessApp.PresentationLayer.ViewModels
 
         #region Methods
 
+
         /// <summary>
-        /// refreshes the list of user workouts
+        /// edits the selected task
         /// </summary>
-        private void RefreshList(object obj)
+        private void EditUserWorkout(object obj)
         {
-            UserWorkouts userWorkouts = new UserWorkouts
+            WorkoutViewModel workoutViewModel = new WorkoutViewModel(CurrentUser, _dashboardWindowViewModel);
+            UserWorkouts userWokouts = new UserWorkouts
             {
-                DataContext = this
+                DataContext = workoutViewModel
             };
-            _currentUserWorkouts = new ObservableCollection<PhysicalActivity>(CurrentUser.PhysicalActivities);
-
-            if (obj is System.Windows.Controls.UserControl)
-            {
-                (obj as System.Windows.Controls.UserControl).Content = userWorkouts;
-            }
-        }
-
-        /// <summary>
-        /// filters workouts based on category
-        /// </summary>
-        private void OnFilterCategory(object obj)
-        {
-            if (!String.IsNullOrEmpty(CategoryFilter))
-            {
-                Enum.TryParse(CategoryFilter, out PhysicalActivity.ExerciseType exerciseType);
-                _currentUserWorkouts = new ObservableCollection<PhysicalActivity>(CurrentUser.PhysicalActivities);
-                CurrentUserWorkouts = new ObservableCollection<PhysicalActivity>(_currentUserWorkouts.Where(w => w.TypeOfExercise == exerciseType));
-            }
-        }
-
-        /// <summary>
-        /// deletes the selected workout
-        /// </summary>
-        private void DeleteWorkout(object obj)
-        {
-            UserWorkouts userWorkouts = new UserWorkouts
-            {
-                DataContext = this
-            };
+            //Task task = CreateTask();
             if (SelectedWorkout != null)
             {
+                Enum.TryParse(CategoryToEdit, out PhysicalActivity.ExerciseType category);
+                SelectedWorkout.TypeOfExercise = category;
                 _myWellnessAppBusiness.DeleteExercise(CurrentUser, SelectedWorkout);
+                _myWellnessAppBusiness.EditExercise(CurrentUser, SelectedWorkout);
                 _currentUserWorkouts = new ObservableCollection<PhysicalActivity>(CurrentUser.PhysicalActivities);
+                _dashboardWindowViewModel.SetProgressBar(SelectedWorkout = null);
                 if (obj is System.Windows.Controls.UserControl)
                 {
-                    (obj as System.Windows.Controls.UserControl).Content = userWorkouts;
+                    (obj as System.Windows.Controls.UserControl).Content = userWokouts;
                 }
-                SelectedWorkout = null;
-                _dashboardWindowViewModel.SetProgressBar(SelectedWorkout);
             }
+        }
+
+        /// <summary>
+        /// clears the form
+        /// </summary>
+        private void Clear(object obj)
+        {
+            EditWorkout editWorkout = new EditWorkout
+            {
+                DataContext = this
+            };
+            Message = null;
+            ResetInputBoxes();
+            if (obj is System.Windows.Controls.UserControl)
+            {
+                (obj as System.Windows.Controls.UserControl).Content = editWorkout;
+            }
+        }
+
+        /// <summary>
+        /// resets the input boxes
+        /// </summary>
+        private void ResetInputBoxes()
+        {
+            SelectedWorkout = null;
         }
 
         /// <summary>

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:MyWellnessApp.PresentationLayer.Views"
          xmlns:navigation="clr-namespace:Syncfusion.Windows.Controls.Navigation;assembly=Syncfusion.SfRadialMenu.Wpf"
         mc:Ignorable="d"
-        Title="DashboardWindow" Height="450" Width="800" Background="Black">
+        Title="DashboardWindow" Height="600" Width="900" Background="Black">
     <Grid>
         <Grid>
             <Grid.ColumnDefinitions>
@@ -22,16 +22,14 @@
             <ContentControl
                 Grid.Column="2"
                 Content="{Binding RightUserControl}">
-                
             </ContentControl>
-            
-            <!-- navigation menu --> 
-            <TextBox 
+
+            <!-- navigation menu -->
+            <Label 
                 Grid.Column="1"
                 Background="Black"
                 Foreground="White"
-                Text="{Binding WelcomeMessage}"
-                TextWrapping="Wrap"
+                Content="{Binding WelcomeMessage}"
                 FontSize="24"
                 FontWeight="Bold"
                 Height="60"
@@ -39,6 +37,7 @@
                 VerticalAlignment="Top"
                 HorizontalContentAlignment="Center"/>
             <navigation:SfRadialMenu 
+                Margin="10,0,10,0"
                 Grid.Column="1"
                 RimRadiusFactor="0.8" 
                 RimBackground="Cyan"
@@ -58,6 +57,12 @@
                     <navigation:SfRadialMenuItem 
                         Header="Workouts"
                         Command="{Binding WorkoutViewCommand}"/>
+                    <navigation:SfRadialMenuItem 
+                        Header="Edit"
+                        Command="{Binding EditWorkoutCommand}"/>
+                    <navigation:SfRadialMenuItem 
+                        Header="Add"
+                        Command="{Binding AddWorkoutCommand}"/>
                 </navigation:SfRadialMenuItem>
                 <navigation:SfRadialMenuItem 
                     Header="Profile" 
@@ -65,16 +70,30 @@
                     Foreground="White"
                     >
                     <navigation:SfRadialMenuItem 
-                        Header="Theme"/>
+                        Header="Logout"
+                        />
                     <navigation:SfRadialMenuItem 
                         Header="View"
                         Command="{Binding ProfileViewCommand}" />
+                    <navigation:SfRadialMenuItem 
+                        Header="Edit"
+                        Command="{Binding EditProfileCommand}"
+                        />
                 </navigation:SfRadialMenuItem>
                 <navigation:SfRadialMenuItem 
-                    Header="Nutrition" 
+                    Header="Tasks" 
                     MenuBackgroundColor="Black"
-                    Foreground="White"
-                    />
+                    Foreground="White">
+                    <navigation:SfRadialMenuItem 
+                         Header="View"
+                         Command="{Binding TaskViewCommand}" />
+                    <navigation:SfRadialMenuItem 
+                         Header="Add"
+                         Command="{Binding AddTaskCommand}" />
+                    <navigation:SfRadialMenuItem 
+                         Header="Edit"
+                         Command="{Binding EditTaskCommand}" />
+                </navigation:SfRadialMenuItem>
             </navigation:SfRadialMenu>
         </Grid>
     </Grid>

@@ -13,9 +13,8 @@ namespace MyWellnessApp.Models
         private string _name;
         private string _userName;
         private string _password;
-        private List<string> _task;
+        private List<Task> _task;
 
-        private UserTheme _userTheme;
         private List<PhysicalActivity> _physicalActivities;
 
         #endregion
@@ -46,16 +45,10 @@ namespace MyWellnessApp.Models
             set { _password = value; }
         }
 
-        public List<string> Task 
+        public List<Task> Task 
         {
             get { return _task; }
             set { _task = value; }
-        }
-
-        public UserTheme UserTheme 
-        {
-            get { return _userTheme; }
-            set { _userTheme = value; }
         }
 
         public List<PhysicalActivity> PhysicalActivities 

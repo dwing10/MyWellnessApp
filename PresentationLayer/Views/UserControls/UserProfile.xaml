@@ -29,9 +29,14 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
             <RowDefinition />
+            <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
-        <StackPanel
+        <Grid
             Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="15"/>
+            </Grid.ColumnDefinitions>
             <Label
                 HorizontalAlignment="Center"
                 HorizontalContentAlignment="Center"
@@ -41,7 +46,19 @@
                 Width="300"
                 Foreground="White"
                 Content="{Binding ProfileTitle}"/>
-        </StackPanel>
+            <Button 
+                    Grid.Column="1"
+                    Content="X"
+                    FontSize="8"
+                    Width="15"
+                    Height="15"
+                    Foreground="Red"
+                    Background="Black"
+                    BorderBrush="Black"
+                    Command="{Binding ExitCommand}"
+                     CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}"
+                    VerticalAlignment="Top"/>
+        </Grid>
         <Grid
                 Grid.Row="1">
             <Grid.ColumnDefinitions>
@@ -49,7 +66,6 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition />
                 <RowDefinition />
                 <RowDefinition />
                 <RowDefinition />
@@ -89,21 +105,6 @@
                 Grid.Row="2"
                 Content="{Binding CurrentUser.Password}"
                 Style="{StaticResource LabelStyle}"/>
-
-            <!-- buttons -->
-            <Button 
-                Grid.Column="0"
-                Grid.Row="3"
-                Content="Close"
-                Style="{StaticResource ButtonStyle}"
-                Command="{Binding ReturnCommand}"
-                CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}"
-                />
-            <Button 
-                Grid.Column="1"
-                Grid.Row="3"
-                Content="Edit"
-                Style="{StaticResource ButtonStyle}"/>
         </Grid>
     </Grid>
 </UserControl>

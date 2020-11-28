@@ -9,18 +9,20 @@ namespace MyWellnessApp.Models
         public enum ExerciseType
         {
             NONE,
-            CARDIO,
-            STRENGTH
+            AEROBIC,
+            STRENGTH,
+            FLEXIBILITY,
+            BALANCE
         }
 
         #region Fields
 
-        private int _id;
+        private int _userId;
         private int _repetitions;
         private int _sets;
-        private int _weight;
-        private int _goal;
-        private int _duration;
+        private double _weight;
+        private double _goal;
+        private double _duration;
 
         private string _exerciseName;
 
@@ -30,10 +32,10 @@ namespace MyWellnessApp.Models
 
         #region Properties
 
-        public int ID 
+        public int UserID 
         {
-            get { return _id; }
-            set { _id = value; }
+            get { return _userId; }
+            set { _userId = value; }
         }
 
         public int Repetitions 
@@ -48,19 +50,19 @@ namespace MyWellnessApp.Models
             set { _sets = value; }
         }
 
-        public int Weight 
+        public double Weight 
         {
             get { return _weight; }
             set { _weight = value; }
         }
 
-        public int Goal 
+        public double Goal 
         {
             get { return _goal; }
             set { _goal = value; }
         }
 
-        public int Duration
+        public double Duration
         {
             get { return _duration; }
             set { _duration = value; }
