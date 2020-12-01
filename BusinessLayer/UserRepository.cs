@@ -52,7 +52,40 @@ namespace MyWellnessApp.BusinessLayer
         {
             try
             {
-                _users.Add(user);
+                _dataService.Add(user);
+                //_users.Add(user);
+            }
+            catch (Exception e)
+            {
+                string m = e.Message;
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// adds a task 
+        /// </summary>
+        public void AddTask(Task task)
+        {
+            try
+            {
+                _dataService.AddTask(task);
+            }
+            catch (Exception e)
+            {
+                string m = e.Message;
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// adds a physical activity
+        /// </summary>
+        public void AddPhysicalActivity(PhysicalActivity activity)
+        {
+            try
+            {
+                _dataService.AddPhysicalActivity(activity);
             }
             catch (Exception e)
             {
@@ -68,7 +101,7 @@ namespace MyWellnessApp.BusinessLayer
         {
             try
             {
-                _users.Remove(_users.FirstOrDefault(u => u.ID == id));
+                _dataService.Delete(id);
             }
             catch (Exception e)
             {
@@ -77,15 +110,81 @@ namespace MyWellnessApp.BusinessLayer
             }
         }
 
+        /// <summary>
+        /// deletes a task 
+        /// </summary>
+        public void DeleteTask(Task task)
+        {
+            try
+            {
+                _dataService.DeleteTask(task);
+            }
+            catch (Exception e)
+            {
+                string m = e.Message;
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// adds a physical activity
+        /// </summary>
+        public void DeletePhysicalActivity(PhysicalActivity activity)
+        {
+            try
+            {
+                _dataService.DeletePhysicalActivity(activity);
+            }
+            catch (Exception e)
+            {
+                string m = e.Message;
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// updates user
+        /// </summary>
         public void Update(User user)
         {
             try
             {
-                //_dataService.Update(pokemon);
+                _dataService.Update(user);
 
-                _users.Remove(_users.FirstOrDefault(u => u.ID == user.ID));
-                _users.Add(user);
-                //_dataService.WriteAll(_pokemon);
+                //_users.Remove(_users.FirstOrDefault(u => u.ID == user.ID));
+                //_users.Add(user);
+            }
+            catch (Exception e)
+            {
+                string m = e.Message;
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// updates a task 
+        /// </summary>
+        public void UpdateTask(Task task)
+        {
+            try
+            {
+                _dataService.UpdateTask(task);
+            }
+            catch (Exception e)
+            {
+                string m = e.Message;
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// updates a physical activity
+        /// </summary>
+        public void UpdatePhysicalActivity(PhysicalActivity activity)
+        {
+            try
+            {
+                _dataService.UpdatePhysicalActivity(activity);
             }
             catch (Exception e)
             {

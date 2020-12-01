@@ -177,6 +177,7 @@ namespace MyWellnessApp.PresentationLayer.ViewModels
             if (SelectedWorkout != null)
             {
                 _myWellnessAppBusiness.DeleteExercise(CurrentUser, SelectedWorkout);
+                _currentUser.PhysicalActivities.Remove(SelectedWorkout);
                 _currentUserWorkouts = new ObservableCollection<PhysicalActivity>(CurrentUser.PhysicalActivities);
                 if (obj is System.Windows.Controls.UserControl)
                 {

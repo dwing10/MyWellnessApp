@@ -17,6 +17,7 @@ namespace MyWellnessApp.Models
 
         #region Fields
 
+        private int _id;
         private int _userId;
         private int _repetitions;
         private int _sets;
@@ -32,6 +33,11 @@ namespace MyWellnessApp.Models
 
         #region Properties
 
+        public int ID
+        {
+            get { return _id; }
+            set { _id = value; }
+        }
         public int UserID 
         {
             get { return _userId; }

@@ -103,6 +103,7 @@ namespace MyWellnessApp.PresentationLayer.ViewModels
                 if (task != null)
                 {
                     _myWellnessAppBusiness.AddTaskToUser(CurrentUser, task);
+                    _currentUser.Task.Add(task);
                     ResetInputBoxes();
                     Message = "Success!";
                     if (obj is System.Windows.Controls.UserControl)
@@ -125,6 +126,7 @@ namespace MyWellnessApp.PresentationLayer.ViewModels
         {
             return new Task
             {
+                UserId = CurrentUser.ID,
                 Content = TaskToAdd,
                 Date = DateTime.Now
             };

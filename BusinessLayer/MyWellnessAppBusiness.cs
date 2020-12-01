@@ -18,9 +18,9 @@ namespace MyWellnessApp.BusinessLayer
 
         #region Constructors
 
-        public MyWellnessAppBusiness() 
+        public MyWellnessAppBusiness()
         {
-            SqlUtilities.WriteSeedData();
+            //SqlUtilities.WriteSeedData();
         }
 
         #endregion
@@ -30,7 +30,7 @@ namespace MyWellnessApp.BusinessLayer
         /// <summary>
         /// gets all of the users
         /// </summary>
-        public List<User> GetAllUsers() 
+        public List<User> GetAllUsers()
         {
             List<User> user = null;
             FileIOStatus = FileIoMessage.None;
@@ -63,7 +63,7 @@ namespace MyWellnessApp.BusinessLayer
         /// <summary>
         /// gets user by id
         /// </summary>
-        public User GetUser(int id) 
+        public User GetUser(int id)
         {
             User user = null;
             FileIOStatus = FileIoMessage.None;
@@ -97,7 +97,7 @@ namespace MyWellnessApp.BusinessLayer
         /// <summary>
         /// retreives all users from seed data or from data path
         /// </summary>
-        public List<User> RetreiveAllUserFromDataPath() 
+        public List<User> RetreiveAllUserFromDataPath()
         {
             return SeedData.GetAllUsers();
 
@@ -107,7 +107,7 @@ namespace MyWellnessApp.BusinessLayer
         /// <summary>
         /// Adds a new user
         /// </summary>
-        public void AddUser(User user) 
+        public void AddUser(User user)
         {
             try
             {
@@ -131,9 +131,26 @@ namespace MyWellnessApp.BusinessLayer
         /// <summary>
         /// adds a workout to the user
         /// </summary>
-        public void AddExerciseToUser(User user, PhysicalActivity physicalActivity) 
+        public void AddExerciseToUser(User user, PhysicalActivity physicalActivity)
         {
-            user.PhysicalActivities.Add(physicalActivity);
+            try
+            {
+                if (physicalActivity != null)
+                {
+                    using (UserRepository userRepository = new UserRepository())
+                    {
+                        userRepository.AddPhysicalActivity(physicalActivity);
+                    }
+                    FileIOStatus = FileIoMessage.Complete;
+                }
+            }
+            catch (Exception e)
+            {
+                string m = e.Message;
+                FileIOStatus = FileIoMessage.FileAccessError;
+                throw;
+            }
+            //user.PhysicalActivities.Add(physicalActivity);
         }
 
         /// <summary>
@@ -141,13 +158,31 @@ namespace MyWellnessApp.BusinessLayer
         /// </summary>
         public void AddTaskToUser(User user, Task task)
         {
-            user.Task.Add(task);
+            try
+            {
+                if (task != null)
+                {
+                    using (UserRepository userRepository = new UserRepository())
+                    {
+                        userRepository.AddTask(task);
+                    }
+                    FileIOStatus = FileIoMessage.Complete;
+                }
+            }
+            catch (Exception e)
+            {
+                string m = e.Message;
+                FileIOStatus = FileIoMessage.FileAccessError;
+                throw;
+            }
+
+            //user.Task.Add(task);
         }
 
         /// <summary>
         /// deletes a user by ID
         /// </summary>
-        public void DeleteUser(int id) 
+        public void DeleteUser(int id)
         {
             try
             {
@@ -175,9 +210,53 @@ namespace MyWellnessApp.BusinessLayer
         /// <summary>
         /// removes excersise from user
         /// </summary>
-        public void DeleteExercise(User user, PhysicalActivity physicalActivity) 
+        public void DeleteExercise(User user, PhysicalActivity physicalActivity)
         {
-            user.PhysicalActivities.Remove(physicalActivity);
+            try
+            {
+                if (physicalActivity != null)
+                {
+                    using (UserRepository userRepository = new UserRepository())
+                    {
+                        userRepository.DeletePhysicalActivity(physicalActivity);
+                    }
+                    FileIOStatus = FileIoMessage.Complete;
+                }
+            }
+            catch (Exception e)
+            {
+                string m = e.Message;
+                FileIOStatus = FileIoMessage.FileAccessError;
+                throw;
+            }
+
+            //user.PhysicalActivities.Remove(physicalActivity);
+        }
+
+        /// <summary>
+        /// removes task from user
+        /// </summary>
+        public void DeleteTask(User user, Task task)
+        {
+            try
+            {
+                if (task != null)
+                {
+                    using (UserRepository userRepository = new UserRepository())
+                    {
+                        userRepository.DeleteTask(task);
+                    }
+                    FileIOStatus = FileIoMessage.Complete;
+                }
+            }
+            catch (Exception e)
+            {
+                string m = e.Message;
+                FileIOStatus = FileIoMessage.FileAccessError;
+                throw;
+            }
+
+            //user.Task.Remove(task);
         }
 
         /// <summary>
@@ -185,26 +264,58 @@ namespace MyWellnessApp.BusinessLayer
         /// </summary>
         public void EditExercise(User user, PhysicalActivity physicalActivity)
         {
-            user.PhysicalActivities.Add(physicalActivity);
+            try
+            {
+                if (physicalActivity != null)
+                {
+                    using (UserRepository userRepository = new UserRepository())
+                    {
+                        userRepository.UpdatePhysicalActivity(physicalActivity);
+                    }
+                    FileIOStatus = FileIoMessage.Complete;
+                }
+            }
+            catch (Exception e)
+            {
+                string m = e.Message;
+                FileIOStatus = FileIoMessage.FileAccessError;
+                throw;
+            }
+
+            //user.PhysicalActivities.Add(physicalActivity);
         }
 
         /// <summary>
-        /// removes task from user
+        /// edits user task
         /// </summary>
-        public void DeleteTask(User user, Task task) 
+        /// <param name="user"></param>
+        public void EditTask(User user, Task task)
         {
-            user.Task.Remove(task);
-        }
+            try
+            {
+                if (task != null)
+                {
+                    using (UserRepository userRepository = new UserRepository())
+                    {
+                        userRepository.UpdateTask(task);
+                    }
+                    FileIOStatus = FileIoMessage.Complete;
+                }
+            }
+            catch (Exception e)
+            {
+                string m = e.Message;
+                FileIOStatus = FileIoMessage.FileAccessError;
+                throw;
+            }
 
-        public void EditTask(User user, Task task) 
-        {
-            user.Task.Add(task);
+            //user.Task.Add(task);
         }
 
         /// <summary>
         /// updates a user by the ID
         /// </summary>
-        public void UpdateUser(User userToUpdate) 
+        public void UpdateUser(User userToUpdate)
         {
             try
             {
@@ -228,6 +339,7 @@ namespace MyWellnessApp.BusinessLayer
                 throw;
             }
         }
+
         #endregion
     }
 }

@@ -158,7 +158,7 @@ namespace MyWellnessApp.PresentationLayer.ViewModels
             {
                 Enum.TryParse(CategoryToEdit, out PhysicalActivity.ExerciseType category);
                 SelectedWorkout.TypeOfExercise = category;
-                _myWellnessAppBusiness.DeleteExercise(CurrentUser, SelectedWorkout);
+                //_myWellnessAppBusiness.DeleteExercise(CurrentUser, SelectedWorkout);
                 _myWellnessAppBusiness.EditExercise(CurrentUser, SelectedWorkout);
                 _currentUserWorkouts = new ObservableCollection<PhysicalActivity>(CurrentUser.PhysicalActivities);
                 _dashboardWindowViewModel.SetProgressBar(SelectedWorkout = null);

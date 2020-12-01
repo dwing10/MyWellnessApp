@@ -195,6 +195,7 @@ namespace MyWellnessApp.PresentationLayer.ViewModels
             try
             {
                 _myWellnessAppBusiness.AddExerciseToUser(CurrentUser, physicalActivity);
+                _currentUser.PhysicalActivities.Add(physicalActivity);
                 ResetInputBoxes();
                 Message = "Success!";
                 if (obj is System.Windows.Controls.UserControl)
@@ -245,6 +246,7 @@ namespace MyWellnessApp.PresentationLayer.ViewModels
             Enum.TryParse(CategoryToAdd, out PhysicalActivity.ExerciseType excersiseType);
             return new PhysicalActivity
             {
+                UserID = CurrentUser.ID,
                 ExcerciseName = NameToAdd,
                 TypeOfExercise = excersiseType,
                 Repetitions = RepsToAdd,

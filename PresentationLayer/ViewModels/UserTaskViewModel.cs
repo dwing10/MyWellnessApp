@@ -152,6 +152,7 @@ namespace MyWellnessApp.PresentationLayer.ViewModels
             if (SelectedTask != null)
             {
                 _myWellnessAppBusiness.DeleteTask(CurrentUser, SelectedTask);
+                _currentUser.Task.Remove(SelectedTask);
                 _currentUserTasks = new ObservableCollection<Task>(CurrentUser.Task.OrderByDescending(t => t.Date));
                 if (obj is System.Windows.Controls.UserControl)
                 {

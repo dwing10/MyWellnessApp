@@ -8,6 +8,7 @@ namespace MyWellnessApp.Models
     {
         #region Fields
 
+        private int _id;
         private int _userID;
         private string _content;
         private DateTime _date;
@@ -15,6 +16,13 @@ namespace MyWellnessApp.Models
         #endregion
 
         #region Properties
+
+        public int ID
+        {
+            get { return _id; }
+            set { _id = value; }
+        }
+
         public int UserId
         {
             get { return _userID; }
