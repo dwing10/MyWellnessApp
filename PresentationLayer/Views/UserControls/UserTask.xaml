@@ -72,7 +72,9 @@
                     <DataTemplate>
                         <StackPanel Orientation="Vertical">
                             <Label 
-                           Content="{Binding Content}"/>
+                                Content="{Binding Content}"
+                                FontSize="14"
+                                FontWeight="Bold"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>

@@ -80,10 +80,10 @@
             VerticalContentAlignment="Center"
             FontSize="14"/>
         <Label
-            Grid.Row="3"
+                Grid.Row="3"
             Content="{Binding Message}"
             Style="{StaticResource WarningLabelStyle}"
-            />
+            /> 
         <Button 
             Grid.Row="4"
             Content="Unregister"

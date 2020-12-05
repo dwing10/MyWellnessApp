@@ -9,7 +9,7 @@
              d:DesignHeight="500" d:DesignWidth="300">
     <UserControl.Resources>
         <Style x:Key="LabelStyle" TargetType="Label">
-            <Setter Property="Foreground" Value='White'/>
+            <Setter Property="Foreground" Value='Black'/>
             <Setter Property="FontSize" Value="12" />
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="VerticalAlignment" Value="Center"/>

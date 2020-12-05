@@ -19,8 +19,11 @@ namespace MyWellnessApp.DataAccessLayer
                     Password = "password",
                     Task = new List<Task>
                     {
-                    new Task{UserId = 1 , Content = "build out my capstone app", Date = new DateTime(2020, 11, 3) },
-                    new Task{UserId = 1, Content = "find developer job", Date = DateTime.Now}
+                           new Task{UserId = 1 , Content = "Build out my Web App for 218", Date = new DateTime(2020, 11, 1) },
+                           new Task{UserId = 1 , Content = "Build out my capstone app", Date = new DateTime(2020, 11, 3) },
+                            new Task{UserId = 1 , Content = "Shop for christmas presents", Date = new DateTime(2020, 12, 3) },
+                            new Task{UserId = 1 , Content = "Be Awesome", Date = new DateTime(1994, 08, 26) },
+                           new Task{UserId = 1, Content = "Find developer job", Date = DateTime.Now}
                     },
                     PhysicalActivities = new List<PhysicalActivity>
                                             {

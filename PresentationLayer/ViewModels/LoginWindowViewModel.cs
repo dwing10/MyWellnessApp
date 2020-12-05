@@ -129,8 +129,6 @@ namespace MyWellnessApp.PresentationLayer.ViewModels
         public LoginWindowViewModel(MyWellnessAppBusiness myWellnessAppBusiness)
         {
             _myWellnessAppBusiness = myWellnessAppBusiness;
-            InputPassword = "password";
-            InputUsername = "dwing";
             IsVisible = "Visible";
 
             LoginView loginView = new LoginView
@@ -180,6 +178,7 @@ namespace MyWellnessApp.PresentationLayer.ViewModels
         /// </summary>
         private void Login(object obj)
         {
+            Message = null;
             MyWellnessAppBusiness myWellnessAppBusiness = new MyWellnessAppBusiness();
             //List<User> user = myWellnessAppBusiness.RetreiveAllUserFromDataPath();
             List<User> user = myWellnessAppBusiness.GetAllUsers();
@@ -203,6 +202,10 @@ namespace MyWellnessApp.PresentationLayer.ViewModels
                                 (obj as System.Windows.Window).Close();
                             }
 
+                        }
+                        else
+                        {
+                            Message = "INCORRECT USERNAME OR PASSWORD";
                         }
                     }
                     catch (Exception e)
@@ -273,6 +276,7 @@ namespace MyWellnessApp.PresentationLayer.ViewModels
                         {
                             DataContext = this
                         };
+                        Message = null;
                         MessageBoxResult message = MessageBox.Show("You Have Successfully Registered!");
                         IsVisible = "Visible";
                         _userControl.Content = loginView;

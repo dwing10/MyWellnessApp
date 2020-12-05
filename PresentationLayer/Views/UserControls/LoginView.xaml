@@ -45,7 +45,7 @@
         <Label 
             Grid.Row="0"
             Margin="0,0,0,0"
-            Content="Welcome To My Fitness App"
+            Content="Welcome To My Wellness App"
             HorizontalAlignment="Center"
             FontSize="32"
             Style="{StaticResource LabelStyle}"/>
