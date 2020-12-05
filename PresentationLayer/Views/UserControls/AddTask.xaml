@@ -5,18 +5,25 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MyWellnessApp.PresentationLayer.Views.UserControls"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300" Background="Black">
+             d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
         <Style x:Key="LabelStyle" TargetType="Label">
-            <Setter Property="Foreground" Value='White'/>
+            <Setter Property="Foreground" Value='Black'/>
             <Setter Property="FontSize" Value="12" />
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="WarningLabelStyle" TargetType="Label">
+            <Setter Property="Foreground" Value='Red'/>
+            <Setter Property="FontSize" Value="10" />
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
         <Style x:Key="ButtonStyle" TargetType="Button">
             <Setter Property="Width" Value="60"/>
             <Setter Property="Height" Value="40"/>
-            <Setter Property="Background" Value="White" />
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="Black" />
             <Setter Property="FontSize" Value="12" />
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="HorizontalAlignment" Value="Center" />
@@ -25,12 +32,13 @@
             <Setter Property="BorderThickness" Value="2" />
         </Style>
     </UserControl.Resources>
-    <Grid>
+    <Grid
+        Margin="2">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="60"/>
                 <RowDefinition />
-                <RowDefinition Height="70"/>
+                <RowDefinition Height="80"/>
             </Grid.RowDefinitions>
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -63,9 +71,15 @@
                 Orientation="Vertical"
                 Grid.Row="2">
                 <Label 
+                    Margin="0,5,0,0"
                     Content="{Binding Message}"
                     Foreground="Green"
+                    FontSize="10"
                     Style="{StaticResource LabelStyle}"/>
+                <Label 
+                    Margin="0,5,0,5"
+                    Content="{Binding ErrorMessage}"
+                    Style="{StaticResource WarningLabelStyle}"/>
                 <StackPanel
                 Orientation="Horizontal"
                 HorizontalAlignment="Center">

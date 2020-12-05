@@ -35,6 +35,9 @@ namespace MyWellnessApp.DataAccessLayer.SQL
 
         #region Methods
 
+        /// <summary>
+        /// retrieves a listof users
+        /// </summary>
         private List<User> GetUser(DataSet user_ds)
         {
             DataTable user_dt = user_ds.Tables["Users"];
@@ -78,18 +81,18 @@ namespace MyWellnessApp.DataAccessLayer.SQL
             DataTable activities_dt = activities_ds.Tables["PhysicalActivities"];
 
             List<PhysicalActivity> activities = (from a in activities_dt.AsEnumerable()
-                                select new PhysicalActivity()
-                                {
-                                    ID = Convert.ToInt32(a["ID"]),
-                                    UserID = Convert.ToInt32(a["UserID"]),
-                                    ExcerciseName = Convert.ToString(a["ExcersiseName"]),
-                                    Repetitions = Convert.ToInt32(a["Reps"]),
-                                    Sets = Convert.ToInt32(a["Sets"]),
-                                    Weight = Convert.ToDouble(a["Weight"]),
-                                    Duration = Convert.ToDouble(a["Duration"]),
-                                    Goal = Convert.ToDouble(a["Goal"]),
-                                    TypeOfExercise = ConvertToType(a["ExcersiseType"])
-                                }).ToList();
+                                                 select new PhysicalActivity()
+                                                 {
+                                                     ID = Convert.ToInt32(a["ID"]),
+                                                     UserID = Convert.ToInt32(a["UserID"]),
+                                                     ExcerciseName = Convert.ToString(a["ExcersiseName"]),
+                                                     Repetitions = Convert.ToInt32(a["Reps"]),
+                                                     Sets = Convert.ToInt32(a["Sets"]),
+                                                     Weight = Convert.ToDouble(a["Weight"]),
+                                                     Duration = Convert.ToDouble(a["Duration"]),
+                                                     Goal = Convert.ToDouble(a["Goal"]),
+                                                     TypeOfExercise = ConvertToType(a["ExcersiseType"])
+                                                 }).ToList();
 
             return activities;
         }
@@ -210,30 +213,50 @@ namespace MyWellnessApp.DataAccessLayer.SQL
         /// </summary>
         public User GetByID(int id)
         {
-            List<Task> tasksToAdd = new List<Task>();
-            List<PhysicalActivity> activitiesToAdd = new List<PhysicalActivity>();
             User user = _users.FirstOrDefault(u => u.ID == id);
-
-            foreach (var task in _tasks)
-            {
-                if (task.UserId == user.ID)
-                {
-                    tasksToAdd.Add(task);
-                }
-            }
-
-            foreach (var activity in _activities)
-            {
-                if (activity.UserID == user.ID)
-                {
-                    activitiesToAdd.Add(activity);
-                }
-            }
+            List<PhysicalActivity> activitiesToAdd = GetListOfActivities(user);
+            List<Task> tasksToAdd = GetListOfTasks(user);
 
             user.Task = tasksToAdd;
             user.PhysicalActivities = activitiesToAdd;
 
             return user;
+        }
+
+        /// <summary>
+        /// fills current users list of tasks
+        /// </summary>
+        public List<Task> GetListOfTasks(User user)
+        {
+            List<Task> tasks = new List<Task>();
+
+            foreach (var task in _tasks)
+            {
+                if (task.UserId == user.ID)
+                {
+                    tasks.Add(task);
+                }
+            }
+
+            return tasks;
+        }
+
+        /// <summary>
+        /// fills current users list of activities
+        /// </summary>
+        public List<PhysicalActivity> GetListOfActivities(User user)
+        {
+            List<PhysicalActivity> activities = new List<PhysicalActivity>();
+
+            foreach (var activity in _activities)
+            {
+                if (activity.UserID == user.ID)
+                {
+                    activities.Add(activity);
+                }
+            }
+
+            return activities;
         }
 
         /// <summary>
@@ -272,7 +295,7 @@ namespace MyWellnessApp.DataAccessLayer.SQL
         /// <summary>
         /// add task to database
         /// </summary>
-        public void AddTask(Task task) 
+        public void AddTask(Task task)
         {
             string connectionString = SqlDataSettings.ConnectionString;
 
@@ -397,6 +420,34 @@ namespace MyWellnessApp.DataAccessLayer.SQL
         }
 
         /// <summary>
+        /// deletes task from the current user when user is removed
+        /// </summary>
+        public void DeleteCurrentUserTask(int id)
+        {
+            string connectionString = SqlDataSettings.ConnectionString;
+
+            var sb = new StringBuilder("DELETE FROM Tasks");
+            sb.Append(" WHERE UserID = ").Append(id);
+            string commandString = sb.ToString();
+
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    SqlDataAdapter sqlAdapter = new SqlDataAdapter();
+                    sqlConnection.Open();
+                    sqlAdapter.InsertCommand = new SqlCommand(commandString, sqlConnection);
+                    sqlAdapter.InsertCommand.ExecuteNonQuery();
+                }
+                catch (Exception msg)
+                {
+                    var exceptionMessage = msg.Message;
+                    throw;
+                }
+            }
+        }
+
+        /// <summary>
         /// deletes PhysicalACtivity from user
         /// </summary>
         public void DeletePhysicalActivity(PhysicalActivity activity)
@@ -405,6 +456,34 @@ namespace MyWellnessApp.DataAccessLayer.SQL
 
             var sb = new StringBuilder("DELETE FROM PhysicalActivities");
             sb.Append(" WHERE ID = ").Append(activity.ID);
+            string commandString = sb.ToString();
+
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    SqlDataAdapter sqlAdapter = new SqlDataAdapter();
+                    sqlConnection.Open();
+                    sqlAdapter.InsertCommand = new SqlCommand(commandString, sqlConnection);
+                    sqlAdapter.InsertCommand.ExecuteNonQuery();
+                }
+                catch (Exception msg)
+                {
+                    var exceptionMessage = msg.Message;
+                    throw;
+                }
+            }
+        }
+
+        /// <summary>
+        /// deletes PhysicalACtivity from current user when user is removed
+        /// </summary>
+        public void DeleteCurrentUserPhysicalActivity(int id)
+        {
+            string connectionString = SqlDataSettings.ConnectionString;
+
+            var sb = new StringBuilder("DELETE FROM PhysicalActivities");
+            sb.Append(" WHERE UserID = ").Append(id);
             string commandString = sb.ToString();
 
             using (SqlConnection sqlConnection = new SqlConnection(connectionString))
@@ -534,7 +613,6 @@ namespace MyWellnessApp.DataAccessLayer.SQL
         }
 
         #endregion
-
 
     }
 }

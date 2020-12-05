@@ -41,8 +41,24 @@ namespace MyWellnessApp.BusinessLayer
         /// </summary>
         public User GetByID(int id)
         {
-           return _dataService.GetByID(id);
+            return _dataService.GetByID(id);
             //return _users.FirstOrDefault(u => u.ID == id);
+        }
+
+        /// <summary>
+        /// retrieves current user's list of physical activities
+        /// </summary>
+        public List<PhysicalActivity> GetCurrentUserPhysicalActivities(User user)
+        {
+            return _dataService.GetListOfActivities(user);
+        }
+
+        /// <summary>
+        /// retrieves current user's list of tasks
+        /// </summary>
+        public List<Task> GetCurrentUserTasks(User user)
+        {
+            return _dataService.GetListOfTasks(user);
         }
 
         /// <summary>
@@ -101,6 +117,8 @@ namespace MyWellnessApp.BusinessLayer
         {
             try
             {
+                _dataService.DeleteCurrentUserTask(id);
+                _dataService.DeleteCurrentUserPhysicalActivity(id);
                 _dataService.Delete(id);
             }
             catch (Exception e)

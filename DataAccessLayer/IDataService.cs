@@ -27,10 +27,18 @@ namespace MyWellnessApp.DataAccessLayer
 
         void UpdatePhysicalActivity(PhysicalActivity activity);
 
+        List<Task> GetListOfTasks(User user);
+
+        List<PhysicalActivity> GetListOfActivities(User user);
+
         void Delete(int id);
 
         void DeleteTask(Task task);
 
+        void DeleteCurrentUserTask(int id);
+
         void DeletePhysicalActivity(PhysicalActivity activity);
+
+        void DeleteCurrentUserPhysicalActivity(int id);
     }
 }

@@ -1,4 +1,5 @@
-﻿using MyWellnessApp.Models;
+﻿using MyWellnessApp.BusinessLayer;
+using MyWellnessApp.Models;
 using MyWellnessApp.PresentationLayer.Views;
 using MyWellnessApp.PresentationLayer.Views.UserControls;
 using MyWellnessApp.Utilities;
@@ -6,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -15,6 +17,7 @@ namespace MyWellnessApp.PresentationLayer.ViewModels
     {
         #region fields
 
+        private Window _window;
         private ObservableCollection<User> _users;
         private User _currentUser;
         private UserControl _leftUserControl;
@@ -130,6 +133,18 @@ namespace MyWellnessApp.PresentationLayer.ViewModels
             get { return new RelayCommand(new Action<object>(EditUserProfile)); }
         }
 
+        public ICommand UnregisterCommand
+        {
+            get { return new RelayCommand(new Action<object>(UnregisterUser)); }
+        }
+
+        public ICommand LogoutCommand
+        {
+            get { return new RelayCommand(new Action<object>(Logout)); }
+        }
+
+
+
         #endregion
 
         #region Methods
@@ -137,7 +152,7 @@ namespace MyWellnessApp.PresentationLayer.ViewModels
         /// <summary>
         /// view current user's tasks
         /// </summary>
-        private void ViewTasks(object obj) 
+        private void ViewTasks(object obj)
         {
             RightUserControl = null;
 
@@ -159,7 +174,7 @@ namespace MyWellnessApp.PresentationLayer.ViewModels
         /// <summary>
         /// shows the add task user control
         /// </summary>
-        private void AddTasks(object obj) 
+        private void AddTasks(object obj)
         {
             LeftUserControl = null;
 
@@ -189,7 +204,7 @@ namespace MyWellnessApp.PresentationLayer.ViewModels
 
             if (RightUserControl == null)
             {
-                EditTaskViewModel editTaskViewModel =  new EditTaskViewModel(CurrentUser);
+                EditTaskViewModel editTaskViewModel = new EditTaskViewModel(CurrentUser);
                 EditTask editTask = new EditTask
                 {
                     DataContext = editTaskViewModel
@@ -298,7 +313,7 @@ namespace MyWellnessApp.PresentationLayer.ViewModels
             }
         }
 
-        private void EditUserProfile(object obj) 
+        private void EditUserProfile(object obj)
         {
             LeftUserControl = null;
 
@@ -320,9 +335,54 @@ namespace MyWellnessApp.PresentationLayer.ViewModels
         }
 
         /// <summary>
+        /// unregisters user
+        /// </summary>
+        private void UnregisterUser(object obj)
+        {
+            if (obj is Window)
+            {
+                _window = (obj as Window);
+            }
+
+            RightUserControl = null;
+            if (RightUserControl == null)
+            {
+                UnregisterUserViewModel unregisterUserViewModel = new UnregisterUserViewModel(CurrentUser, _window);
+                UnregisterUser unregister = new UnregisterUser
+                {
+                    DataContext = unregisterUserViewModel
+                };
+
+                RightUserControl = unregister;
+            }
+            else
+            {
+                RightUserControl = null;
+            }
+        }
+
+        /// <summary>
+        /// logs out of the app
+        /// </summary>
+        private void Logout(object obj)
+        {
+            MyWellnessAppBusiness myWellnessAppBusiness = new MyWellnessAppBusiness();
+            LoginWindowViewModel loginWindowViewModel = new LoginWindowViewModel(myWellnessAppBusiness);
+            LoginWindow loginWindow = new LoginWindow
+            {
+                DataContext = loginWindowViewModel
+            };
+            loginWindow.Show();
+            if (obj is Window)
+            {
+                (obj as Window).Close();
+            }
+        }
+
+        /// <summary>
         /// sets the progress bar user control
         /// </summary>
-        public void SetProgressBar(PhysicalActivity activity) 
+        public void SetProgressBar(PhysicalActivity activity)
         {
             LeftUserControl = null;
 

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace MyWellnessApp.PresentationLayer.ViewModels
 {
@@ -86,6 +87,10 @@ namespace MyWellnessApp.PresentationLayer.ViewModels
 
         #region Commands
 
+        public ICommand ExitCommand
+        {
+            get { return new RelayCommand(new Action<object>(Close)); }
+        }
 
         #endregion
 
@@ -126,6 +131,17 @@ namespace MyWellnessApp.PresentationLayer.ViewModels
                 DisplayProgress = calculatedProgress.ToString("P0");
                 Progress = calculatedProgress * 100;
                 IsIndeterminate = true;
+            }
+        }
+
+        /// <summary>
+        /// resets the UserControl's content
+        /// </summary>
+        private void Close(object obj)
+        {
+            if (obj is System.Windows.Controls.UserControl)
+            {
+                (obj as System.Windows.Controls.UserControl).Content = null;
             }
         }
 

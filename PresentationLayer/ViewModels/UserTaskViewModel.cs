@@ -1,6 +1,7 @@
 ﻿using MyWellnessApp.BusinessLayer;
 using MyWellnessApp.Models;
 using MyWellnessApp.PresentationLayer.Views;
+using MyWellnessApp.PresentationLayer.Views.UserControls;
 using MyWellnessApp.Utilities;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Collections.ObjectModel;
 using System.Text;
 using System.Linq;
 using System.Windows.Input;
+using System.Globalization;
 
 namespace MyWellnessApp.PresentationLayer.ViewModels
 {

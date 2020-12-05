@@ -6,8 +6,16 @@
         xmlns:local="clr-namespace:MyWellnessApp.PresentationLayer.Views"
          xmlns:navigation="clr-namespace:Syncfusion.Windows.Controls.Navigation;assembly=Syncfusion.SfRadialMenu.Wpf"
         mc:Ignorable="d"
-        Title="DashboardWindow" Height="600" Width="900" Background="Black">
+        Title="DashboardWindow" Height="620" Width="900" Background="SteelBlue">
     <Grid>
+        <Grid.Background>
+            <VisualBrush>
+                <VisualBrush.Visual>
+                    <MediaElement Source="C:\NMC Classes\CIT255\My_Wellness_App\MyWellnessApp\Images\Transition .mp4" Opacity=".7">
+                    </MediaElement>
+                </VisualBrush.Visual>
+            </VisualBrush>
+        </Grid.Background>
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
@@ -23,74 +31,108 @@
                 Grid.Column="2"
                 Content="{Binding RightUserControl}">
             </ContentControl>
-
+            
             <!-- navigation menu -->
             <Label 
                 Grid.Column="1"
-                Background="Black"
-                Foreground="White"
+                Foreground="Blue"
                 Content="{Binding WelcomeMessage}"
                 FontSize="24"
                 FontWeight="Bold"
                 Height="60"
-                BorderBrush="Black"
+                BorderThickness="0"
                 VerticalAlignment="Top"
                 HorizontalContentAlignment="Center"/>
             <navigation:SfRadialMenu 
                 Margin="10,0,10,0"
                 Grid.Column="1"
                 RimRadiusFactor="0.8" 
-                RimBackground="Cyan"
-                RimHoverBrush="White"
-                RimActiveBrush="Cyan"
+                CenterRimRadiusFactor="0.2"
+                RimBackground="Blue"
+                RimHoverBrush="Black"
+                RimActiveBrush="Blue"
                 IsOpen="True">
                 <navigation:SfRadialMenuItem 
-                    Header="Wisdom" 
-                    MenuBackgroundColor="Black" 
-                    Foreground="White"
-                    />
-                <navigation:SfRadialMenuItem 
+                    Margin="10"
                     Header="Get Fit" 
-                    MenuBackgroundColor="Black" 
-                    Foreground="White"
+                    MenuBackgroundColor="LightBlue" 
+                    Foreground="Black"
                     >
-                    <navigation:SfRadialMenuItem 
+                    <navigation:SfRadialMenuItem
+                        MenuBackgroundColor="LightBlue"
+                        Foreground="Black"
+                        Margin="10"
                         Header="Workouts"
                         Command="{Binding WorkoutViewCommand}"/>
-                    <navigation:SfRadialMenuItem 
+                    <navigation:SfRadialMenuItem
+                        MenuBackgroundColor="LightBlue"
+                        Foreground="Black"
+                        Margin="10"
                         Header="Edit"
                         Command="{Binding EditWorkoutCommand}"/>
-                    <navigation:SfRadialMenuItem 
+                    <navigation:SfRadialMenuItem
+                        MenuBackgroundColor="LightBlue"
+                        Foreground="Black"
+                        Margin="10"
                         Header="Add"
                         Command="{Binding AddWorkoutCommand}"/>
                 </navigation:SfRadialMenuItem>
                 <navigation:SfRadialMenuItem 
                     Header="Profile" 
-                    MenuBackgroundColor="Black"
-                    Foreground="White"
+                      Margin="10"
+                    MenuBackgroundColor="LightBlue"
+                    Foreground="Black"
                     >
-                    <navigation:SfRadialMenuItem 
-                        Header="Logout"
+                    <navigation:SfRadialMenuItem
+                        MenuBackgroundColor="LightBlue"
+                        Foreground="Black"
+                        Margin="10"
+                        Header="Unregister"
+                        Command="{Binding UnregisterCommand}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
                         />
                     <navigation:SfRadialMenuItem 
+                        MenuBackgroundColor="LightBlue"
+                        Foreground="Black"
+                        Margin="10"
+                        Header="Logout"
+                        Command="{Binding LogoutCommand}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"/>
+                    <navigation:SfRadialMenuItem 
+                        MenuBackgroundColor="LightBlue"
+                        Foreground="Black"
+                        Margin="10"
                         Header="View"
                         Command="{Binding ProfileViewCommand}" />
                     <navigation:SfRadialMenuItem 
+                        MenuBackgroundColor="LightBlue"
+                        Foreground="Black"
+                        Margin="10"
                         Header="Edit"
                         Command="{Binding EditProfileCommand}"
                         />
                 </navigation:SfRadialMenuItem>
                 <navigation:SfRadialMenuItem 
-                    Header="Tasks" 
-                    MenuBackgroundColor="Black"
-                    Foreground="White">
+                    Header="Tasks"
+                      Margin="10"
+                     MenuBackgroundColor="LightBlue"
+                    Foreground="Black">
                     <navigation:SfRadialMenuItem 
+                        MenuBackgroundColor="LightBlue"
+                        Foreground="Black"
+                        Margin="10"
                          Header="View"
                          Command="{Binding TaskViewCommand}" />
                     <navigation:SfRadialMenuItem 
+                        MenuBackgroundColor="LightBlue"
+                        Foreground="Black"
+                        Margin="10"
                          Header="Add"
                          Command="{Binding AddTaskCommand}" />
                     <navigation:SfRadialMenuItem 
+                        MenuBackgroundColor="LightBlue"
+                        Foreground="Black"
+                        Margin="10"
                          Header="Edit"
                          Command="{Binding EditTaskCommand}" />
                 </navigation:SfRadialMenuItem>

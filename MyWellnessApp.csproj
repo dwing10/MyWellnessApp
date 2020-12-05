@@ -7,13 +7,34 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Images\" />
+    <None Remove="Images\Christmas.mp4" />
+    <None Remove="Images\circle.jpg" />
+    <None Remove="Images\Transition .mp4" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Syncfusion.SfProgressBar.WPF" Version="18.3.0.51" />
     <PackageReference Include="Syncfusion.SfRadialMenu.WPF" Version="18.3.0.50" />
+    <PackageReference Include="Syncfusion.Shared.WPF" Version="18.3.0.52" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\Christmas.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\circle.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Transition .mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Images\liquid.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

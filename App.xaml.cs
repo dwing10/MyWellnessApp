@@ -18,6 +18,7 @@ namespace MyWellnessApp
     {
         private void Application_Startup(object sneder, StartupEventArgs e) 
         {
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MzYxNzQ0QDMxMzgyZTMzMmUzME02bVBzTHJpQTRVaHBDTFV6R3VjZktwNGJWZG1JUnZCVzBSWHp6djlDd2s9");
             MyWellnessAppBusiness myWellnessAppBusiness = new MyWellnessAppBusiness();
 
             LoginWindowViewModel loginWindowViewModel = new LoginWindowViewModel(myWellnessAppBusiness);

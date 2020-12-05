@@ -19,7 +19,7 @@ namespace MyWellnessApp.PresentationLayer.ViewModels
 
         private string _taskToAdd;
         private string _message;
-
+        private string _errorMessage;
 
         #endregion
 
@@ -52,6 +52,16 @@ namespace MyWellnessApp.PresentationLayer.ViewModels
             {
                 _message = value;
                 OnPropertyChanged(nameof(Message));
+            }
+        }
+
+        public string ErrorMessage
+        {
+            get { return _errorMessage; }
+            set
+            {
+                _errorMessage = value;
+                OnPropertyChanged(nameof(ErrorMessage));
             }
         }
 
@@ -93,6 +103,8 @@ namespace MyWellnessApp.PresentationLayer.ViewModels
         /// </summary>
         private void AddTaskToUser(object obj)
         {
+            ErrorMessage = null;
+            Message = null;
             AddTask addTask = new AddTask
             {
                 DataContext = this
@@ -102,13 +114,22 @@ namespace MyWellnessApp.PresentationLayer.ViewModels
             {
                 if (task != null)
                 {
-                    _myWellnessAppBusiness.AddTaskToUser(CurrentUser, task);
-                    _currentUser.Task.Add(task);
-                    ResetInputBoxes();
-                    Message = "Success!";
-                    if (obj is System.Windows.Controls.UserControl)
+                    if (!String.IsNullOrEmpty(TaskToAdd))
                     {
-                        (obj as System.Windows.Controls.UserControl).Content = addTask;
+                        _myWellnessAppBusiness.AddTaskToUser(CurrentUser, task);
+                        _currentUser.Task = _myWellnessAppBusiness.GetCurrentUserTasks(CurrentUser);
+                        ResetInputBoxes();
+                        ErrorMessage = null;
+                        Message = "SUCCESS!";
+                        if (obj is System.Windows.Controls.UserControl)
+                        {
+                            (obj as System.Windows.Controls.UserControl).Content = addTask;
+                        }
+                    }
+                    else
+                    {
+                        Message = null;
+                        ErrorMessage = "SORRY, NOTHING TO ADD";
                     }
                 }
             }
@@ -141,6 +162,7 @@ namespace MyWellnessApp.PresentationLayer.ViewModels
             {
                 DataContext = this
             };
+            ErrorMessage = null;
             Message = null;
             ResetInputBoxes();
             if (obj is System.Windows.Controls.UserControl)

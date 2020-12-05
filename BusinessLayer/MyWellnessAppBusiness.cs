@@ -60,6 +60,8 @@ namespace MyWellnessApp.BusinessLayer
             return user;
         }
 
+
+
         /// <summary>
         /// gets user by id
         /// </summary>
@@ -91,6 +93,62 @@ namespace MyWellnessApp.BusinessLayer
             }
 
             return user;
+        }
+
+        /// <summary>
+        /// retrieves lists of current user's tasks
+        /// </summary>
+        public List<Task> GetCurrentUserTasks(User user)
+        {
+            List<Task> tasks = new List<Task>();
+            try
+            {
+                if (user != null)
+                {
+                    using (UserRepository userRepository = new UserRepository())
+                    {
+                        tasks = userRepository.GetCurrentUserTasks(user);
+                    }
+                    FileIOStatus = FileIoMessage.Complete;
+                }
+            }
+            catch (Exception e)
+            {
+                tasks = null;
+                string m = e.Message;
+                FileIOStatus = FileIoMessage.FileAccessError;
+                throw;
+            }
+
+            return tasks;
+        }
+
+        /// <summary>
+        /// retrieves lists of current user's physical activities
+        /// </summary>
+        public List<PhysicalActivity> GetCurrentUserPhysicalActivities(User user) 
+        {
+            List<PhysicalActivity> activities = new List<PhysicalActivity>();
+            try
+            {
+                if (user != null)
+                {
+                    using (UserRepository userRepository = new UserRepository())
+                    {
+                       activities = userRepository.GetCurrentUserPhysicalActivities(user);
+                    }
+                    FileIOStatus = FileIoMessage.Complete;
+                }
+            }
+            catch (Exception e)
+            {
+                activities = null;
+                string m = e.Message;
+                FileIOStatus = FileIoMessage.FileAccessError;
+                throw;
+            }
+
+            return activities;
         }
 
 

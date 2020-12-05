@@ -26,7 +26,8 @@
             <Setter Property="BorderThickness" Value="2" />
         </Style>
     </UserControl.Resources>
-    <Grid>
+    <Grid
+        Margin="2">
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
             <RowDefinition />
@@ -57,6 +58,8 @@
         </Grid>
         <Syncfusion:SfCircularProgressBar
             Grid.Row="1"
+            TrackColor="White"
+            ProgressColor="Green"
             ProgressContent="{Binding DisplayProgress}"
             Progress="{Binding Progress}" 
             IsIndeterminate="{Binding IsIndeterminate}"

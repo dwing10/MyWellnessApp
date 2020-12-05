@@ -22,6 +22,7 @@ namespace MyWellnessApp.PresentationLayer.ViewModels
         private string _nameToAdd;
         private string _categoryToAdd;
         private string _message;
+        private string _errorMessage;
 
         private int _repsToAdd;
         private int _setsToAdd;
@@ -74,6 +75,16 @@ namespace MyWellnessApp.PresentationLayer.ViewModels
             {
                 _message = value;
                 OnPropertyChanged(nameof(Message));
+            }
+        }
+
+        public string ErrorMessage
+        {
+            get { return _errorMessage; }
+            set
+            {
+                _errorMessage = value;
+                OnPropertyChanged(nameof(ErrorMessage));
             }
         }
 
@@ -187,20 +198,31 @@ namespace MyWellnessApp.PresentationLayer.ViewModels
         /// </summary>
         private void AddWorkout(object obj)
         {
+            Message = null;
+            ErrorMessage = null;
             AddWorkout addWorkout = new AddWorkout
             {
                 DataContext = this
             };
-            PhysicalActivity physicalActivity = CreatePhysicalActivity();
+
             try
             {
-                _myWellnessAppBusiness.AddExerciseToUser(CurrentUser, physicalActivity);
-                _currentUser.PhysicalActivities.Add(physicalActivity);
-                ResetInputBoxes();
-                Message = "Success!";
-                if (obj is System.Windows.Controls.UserControl)
+                if (!String.IsNullOrEmpty(NameToAdd) && CategoryToAdd != null)
                 {
-                    (obj as System.Windows.Controls.UserControl).Content = addWorkout;
+                    PhysicalActivity physicalActivity = CreatePhysicalActivity();
+                    _myWellnessAppBusiness.AddExerciseToUser(CurrentUser, physicalActivity);
+                    _currentUser.PhysicalActivities = _myWellnessAppBusiness.GetCurrentUserPhysicalActivities(CurrentUser);
+                    ResetInputBoxes();
+                    ErrorMessage = null;
+                    Message = "Success!";
+                    if (obj is System.Windows.Controls.UserControl)
+                    {
+                        (obj as System.Windows.Controls.UserControl).Content = addWorkout;
+                    }
+                }
+                else
+                {
+                    ErrorMessage = "NAME AND CATEGORY MUST BE FILLED IN";
                 }
             }
             catch (Exception e)
@@ -213,13 +235,14 @@ namespace MyWellnessApp.PresentationLayer.ViewModels
         /// <summary>
         /// clears the form
         /// </summary>
-        private void Clear(object obj) 
+        private void Clear(object obj)
         {
             AddWorkout addWorkout = new AddWorkout
             {
                 DataContext = this
             };
             Message = null;
+            ErrorMessage = null;
             ResetInputBoxes();
             if (obj is System.Windows.Controls.UserControl)
             {
@@ -260,7 +283,7 @@ namespace MyWellnessApp.PresentationLayer.ViewModels
         /// <summary>
         /// resets the input boxes
         /// </summary>
-        private void ResetInputBoxes() 
+        private void ResetInputBoxes()
         {
             NameToAdd = null;
             CategoryToAdd = null;

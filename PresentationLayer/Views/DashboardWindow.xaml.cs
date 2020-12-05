@@ -19,6 +19,7 @@ namespace MyWellnessApp.PresentationLayer.Views
     {
         public DashboardWindow()
         {
+            WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             InitializeComponent();
         }
     }

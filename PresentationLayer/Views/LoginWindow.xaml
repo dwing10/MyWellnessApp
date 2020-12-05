@@ -5,57 +5,107 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MyWellnessApp.PresentationLayer"
         mc:Ignorable="d"
-        Title="LoginWindow" Height="250" Width="500">
+        Title="LoginWindow" Height="420" Width="500" Background="LightSteelBlue">
+    <Window.Resources>
+        <Style x:Key="LabelStyle" TargetType="Label">
+            <Setter Property="Foreground" Value='Black'/>
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0,0,5,0" />
+        </Style>
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="Width" Value="60"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Background" Value="Black" />
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="BorderBrush" Value="Cyan" />
+            <Setter Property="BorderThickness" Value="2" />
+        </Style>
+        <Style x:Key="InputBox" TargetType="TextBox">
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="Height" Value="30" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+    </Window.Resources>
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="45"/>
+        </Grid.RowDefinitions>
         <StackPanel>
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
+                    <RowDefinition Height="310"/>
                     <RowDefinition />
                 </Grid.RowDefinitions>
-                <DockPanel
+                <Grid
                     Grid.Row="0">
-                    <Menu DockPanel.Dock="Top" Background="Black" Foreground="White">
-                        <MenuItem Header= "Register" Command="{Binding ViewSelectionCommand}" CommandParameter="Register"  Background="Black">
-                        </MenuItem>
-                    <MenuItem Header="Exit" Command="{Binding ViewSelectionCommand}" CommandParameter="Exit"  Background="Black"/>
-                </Menu>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="30"/>
+                    </Grid.ColumnDefinitions>
+                     <DockPanel
+                         Grid.Column="0">
+                        <Menu DockPanel.Dock="Top" Background="LightSteelBlue" Foreground="Black">
+                            <MenuItem 
+                                Header= "Login" 
+                                Command="{Binding LoginViewCommand}" 
+                                Background="LightSteelBlue" />
+                            <MenuItem 
+                                Header= "Register" 
+                                Command="{Binding RegisterCommand}" 
+                                Background="LightSteelBlue" />
+                        </Menu>
                 </DockPanel>
-
-                <Label 
+                    <DockPanel
+                        Grid.Column="1">
+                        <Menu DockPanel.Dock="Top" 
+                              Background="LightSteelBlue" 
+                              Foreground="Black">
+                            <MenuItem 
+                                Header="Exit" 
+                                Command="{Binding ExitCommand}" 
+                                CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"  
+                                Background="LightSteelBlue"/>
+                        </Menu>
+                    </DockPanel>
+                </Grid>
+                <UserControl
                     Grid.Row="1"
-                    Content="Welcome To My Fitness App"
-                    HorizontalAlignment="Center"
-                    FontSize="32"/>
-                <StackPanel
-                    Grid.Row="2"
-                    Orientation="Horizontal"
-                    HorizontalAlignment="Center">
-                    <Label 
-                        Content="Username"/>
-                    <TextBox 
-                        Width="100"
-                        Text="{Binding InputUsername}"/>
-                </StackPanel>
-                <StackPanel
-                    Grid.Row="3"
-                    Orientation="Horizontal"
-                    HorizontalAlignment="Center">
-                    <Label 
-                        Content="Password"/>
-                    <TextBox 
-                        Width="100"
-                        Text="{Binding InputPassword}"/>
-                </StackPanel>
-                <Button
-                    Grid.Row="4"
-                    Content="Login"
-                    Width="50"
-                    Command="{Binding LoginCommand}"/>
+                    Width="500"
+                    Height="295"
+                    Content="{Binding UserControl}">
+
+                </UserControl>
             </Grid>
         </StackPanel>
+        <Label 
+            Content="{Binding Message}"
+            BorderBrush="Black"
+            Grid.Row="1"
+            Foreground="Red"
+            Height="20"
+            FontSize="10"
+            HorizontalContentAlignment="Center"
+            VerticalContentAlignment="Center"/>
+        <Button
+            Grid.Row="2"
+            Margin="5"
+            Content="Login"
+            Style="{StaticResource ButtonStyle}"
+            Visibility = "{Binding IsVisible}"
+            Command="{Binding LoginCommand}"
+            CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"/>
     </Grid>
 </Window>

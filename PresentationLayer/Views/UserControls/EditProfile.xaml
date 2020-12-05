@@ -8,7 +8,7 @@
              d:DesignHeight="500" d:DesignWidth="300">
     <UserControl.Resources>
         <Style x:Key="LabelStyle" TargetType="Label">
-            <Setter Property="Foreground" Value='White'/>
+            <Setter Property="Foreground" Value='Black'/>
             <Setter Property="FontSize" Value="16" />
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
@@ -16,7 +16,8 @@
         <Style x:Key="ButtonStyle" TargetType="Button">
             <Setter Property="Width" Value="60"/>
             <Setter Property="Height" Value="40"/>
-            <Setter Property="Background" Value="White" />
+            <Setter Property="Background" Value="Black" />
+            <Setter Property="Foreground" Value="White"/>
             <Setter Property="FontSize" Value="14" />
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="HorizontalAlignment" Value="Center" />
@@ -31,7 +32,8 @@
             <Setter Property="VerticalContentAlignment" Value="Center" />
         </Style>
     </UserControl.Resources>
-    <Grid>
+    <Grid
+        Margin="2">
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
             <RowDefinition />
@@ -53,7 +55,7 @@
                 FontSize="24"
                 Height="60"
                 Width="300"
-                Foreground="White"
+                Foreground="Black"
                 Content="Edit Profile"/>
             <Button 
                     Grid.Column="1"
