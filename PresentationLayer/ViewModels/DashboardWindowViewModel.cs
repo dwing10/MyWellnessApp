@@ -143,7 +143,15 @@ namespace MyWellnessApp.PresentationLayer.ViewModels
             get { return new RelayCommand(new Action<object>(Logout)); }
         }
 
+        public ICommand HelpCommand
+        {
+            get { return new RelayCommand(new Action<object>(Help)); }
+        }
 
+        public ICommand CloseHelpCommand
+        {
+            get { return new RelayCommand(new Action<object>(CloseHelp)); }
+        }
 
         #endregion
 
@@ -373,6 +381,27 @@ namespace MyWellnessApp.PresentationLayer.ViewModels
                 DataContext = loginWindowViewModel
             };
             loginWindow.Show();
+            if (obj is Window)
+            {
+                (obj as Window).Close();
+            }
+        }
+
+        /// <summary>
+        /// opens help window
+        /// </summary>
+        private void Help(object obj) 
+        {
+            HelpWindow helpWindow = new HelpWindow { DataContext = this };
+
+            helpWindow.Show();
+        }
+
+        /// <summary>
+        /// closes help window
+        /// </summary>
+        private void CloseHelp(object obj)
+        {
             if (obj is Window)
             {
                 (obj as Window).Close();

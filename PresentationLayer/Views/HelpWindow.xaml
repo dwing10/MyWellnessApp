@@ -1,0 +1,71 @@
+﻿<Window x:Class="MyWellnessApp.PresentationLayer.Views.HelpWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MyWellnessApp.PresentationLayer.Views"
+        mc:Ignorable="d"
+        Title="HelpWindow" Height="250" Width="200" Background="LightSteelBlue">
+    <Window.Resources>
+        <Style x:Key="LabelStyle" TargetType="Label">
+            <Setter Property="Foreground" Value='Black'/>
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0,0,5,0" />
+        </Style>
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="Width" Value="60"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Background" Value="Black" />
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="BorderBrush" Value="Cyan" />
+            <Setter Property="BorderThickness" Value="2" />
+        </Style>
+        <Style x:Key="InputBox" TargetType="TextBox">
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="Height" Value="30" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height='30'/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Vertical">
+            <TextBox
+                Margin="0,0,0,5"
+                Text="1) The radial menu can be collapsed/ expanded by selecting the center."
+                TextWrapping="Wrap"
+                Background="LightSteelBlue"/>
+            <TextBox
+                Margin="0,0,0,5"
+                Text="2) Select a menu header to view that content."
+                TextWrapping="Wrap"
+                Background="LightSteelBlue"/>
+            <TextBox
+                Margin="0,0,0,5"
+                Text="3) Content can be closed by clicking the small red X to the right of the content title."
+                TextWrapping="Wrap"
+                Background="LightSteelBlue"/>
+            <TextBox
+                Text="4) Loging out/ Unregistering can be done from the Profile menu."
+                TextWrapping="Wrap"
+                Background="LightSteelBlue"/>
+        </StackPanel>
+        <Button 
+            Grid.Row="1"
+            Content="Close"
+            Command="{Binding CloseHelpCommand}"
+                CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+            Style="{StaticResource ButtonStyle}"/>
+    </Grid>
+</Window>

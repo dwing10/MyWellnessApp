@@ -6,8 +6,12 @@
         xmlns:local="clr-namespace:MyWellnessApp.PresentationLayer.Views"
          xmlns:navigation="clr-namespace:Syncfusion.Windows.Controls.Navigation;assembly=Syncfusion.SfRadialMenu.Wpf"
         mc:Ignorable="d"
-        Title="DashboardWindow" Height="620" Width="900" Background="SteelBlue">
+        Title="DashboardWindow" Height="630" Width="900" Background="SteelBlue">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="15"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
         <Grid.Background>
             <VisualBrush>
                 <VisualBrush.Visual>
@@ -16,7 +20,19 @@
                 </VisualBrush.Visual>
             </VisualBrush>
         </Grid.Background>
-        <Grid>
+        <Button 
+            Grid.Row="0"
+            Margin="0,0,2,0"
+            Content="Help"
+            Width="25"
+            Height="15"
+            FontSize="8"
+            HorizontalAlignment="Right"
+            Background="LightSteelBlue"
+            FontWeight="Bold"
+            Command="{Binding HelpCommand}"/>
+        <Grid
+            Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
