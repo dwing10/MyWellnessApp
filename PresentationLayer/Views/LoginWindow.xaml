@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MyWellnessApp.PresentationLayer"
         mc:Ignorable="d"
-        Title="LoginWindow" Height="420" Width="500" Background="LightSteelBlue">
+        Title="LoginWindow" Height="430" Width="500" Background="LightSteelBlue">
     <Window.Resources>
         <Style x:Key="LabelStyle" TargetType="Label">
             <Setter Property="Foreground" Value='Black'/>
@@ -39,7 +39,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
-            <RowDefinition Height="20"/>
+            <RowDefinition Height="25"/>
             <RowDefinition Height="45"/>
         </Grid.RowDefinitions>
         <StackPanel>
@@ -97,6 +97,7 @@
             Foreground="Red"
             Height="20"
             FontSize="10"
+            FontWeight="Bold"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"/>
         <Button

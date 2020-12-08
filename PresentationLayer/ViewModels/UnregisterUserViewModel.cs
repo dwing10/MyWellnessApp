@@ -89,12 +89,24 @@ namespace MyWellnessApp.PresentationLayer.ViewModels
             {
                 if (Password == _currentUser.Password)
                 {
-                    _myWellnessAppBusiness.DeleteUser(_currentUser.ID);
+                    MessageBoxResult results = MessageBox.Show("Are you sure you want to delete your profile? This cannot be undone.", "Delete User", MessageBoxButton.YesNo);
 
-                    _window.Close();
+                    switch (results)
+                    {
+                        case MessageBoxResult.Yes:
+                            _myWellnessAppBusiness.DeleteUser(_currentUser.ID);
 
-                    loginWindow.Show();
-                    MessageBoxResult message = MessageBox.Show("You Have Successfully Unregistered!");
+                            _window.Close();
+
+                            loginWindow.Show();
+                            MessageBoxResult message = MessageBox.Show("You Have Successfully Unregistered!");
+                            break;
+                        case MessageBoxResult.No:
+                            break;
+                        default:
+                            break;
+                    }
+
                 }
                 else
                 {

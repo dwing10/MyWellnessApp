@@ -260,13 +260,28 @@ namespace MyWellnessApp.PresentationLayer.ViewModels
         private void RegisterNewUser(object obj)
         {
             User newUser = new User();
+            bool userNameExists = false;
+            List<User> users = _myWellnessAppBusiness.GetAllUsers();
 
             if (!String.IsNullOrEmpty(NewName) && !String.IsNullOrEmpty(NewUsername) && !String.IsNullOrEmpty(NewPassword) && !String.IsNullOrEmpty(VerifyPassword))
             {
                 newUser = CreateNewUser();
+                userNameExists = false;
                 if (newUser != null)
                 {
-                    if (newUser.Password == VerifyPassword)
+                    foreach (var u in users)
+                    {
+                        if (newUser.UserName == u.UserName)
+                        {
+                            Message = "USERNAME ALREADY EXISTS";
+                            userNameExists = true;
+                        }
+                        else
+                        {
+                            userNameExists = false;
+                        }
+                    }
+                    if (newUser.Password == VerifyPassword && userNameExists == false)
                     {
                         _myWellnessAppBusiness.AddUser(newUser);
 
